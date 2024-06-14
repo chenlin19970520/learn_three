@@ -9,6 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^20.14.2",
+    "@types/three": "^0.165.0",
+    "three": "^0.165.0",
+    "unplugin-auto-import": "^0.17.6",
+    "unplugin-vue-components": "^0.27.0",
+    "vite-plugin-components": "^0.13.3",
     "vue": "^3.3.4"
   },
   "devDependencies": {
