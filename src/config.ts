@@ -23,11 +23,18 @@ export const menuComponents = [
     {
         name: "3、光源对物体的影响",
         component: getComponent('basic3')
-    }, {
+    },
+    {
         name: "4、相机控件OrbitControls",
         component: getComponent("basic4")
-    }, {
-        name: "5、3D文字",
+    },
+    {
+        name: "5、平行光与环境光",
+        component: getComponent('basic5')
+    },
+    {
+        name: "3D文字",
         component: getComponent('basicText')
-    }
+    },
+    
 ]
