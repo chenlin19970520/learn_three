@@ -33,8 +33,24 @@ export const menuComponents = [
         component: getComponent('basic5')
     },
     {
+        name: "6、动画渲染循环",
+        component: getComponent('basic6')
+    },
+    {
+        name: "7、Canvas画布全屏",
+        component: getComponent('basic7')
+    },
+    {
+        name: "8、stats查看three.js渲染帧率（FPS）",
+        component: getComponent('basic8')
+    },
+    {
+        name: "9、阵列立方体和相机适配体验",
+        component: getComponent('basic9')
+    },
+    {
         name: "3D文字",
         component: getComponent('basicText')
     },
-    
+
 ]

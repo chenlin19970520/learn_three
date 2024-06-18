@@ -32,12 +32,14 @@ const changeComponent = (item: any, index: number) => {
 }
 
 .three-menu {
-  width: 20rem;
+  min-width: 20rem;
   height: 100vh;
   box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   box-sizing: border-box;
+  white-space: nowrap;
 }
+
 
 .menu-item {
   /* text-align: center; */
@@ -45,7 +47,7 @@ const changeComponent = (item: any, index: number) => {
   height: 2rem;
   line-height: 2rem;
   cursor: pointer;
-  padding: 0rem 2rem;
+  padding: 0rem 1.5rem;
   box-sizing: border-box;
 
 }
