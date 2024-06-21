@@ -31,12 +31,12 @@ const obj = {
     y: 30,
     z: 30,
 };//创建一个对象，对象的属性值可以被gui库创建的界面改变
-const positionControlX =  gui.add(mesh.position, "x", 0, 100)
-const positionControlY = gui.add(mesh.position, "y", 0, 100)
-const positionControlZ = gui.add(mesh.position, "z", 0, 100)
+const positionControlX =  gui.add(mesh.position, "x", 0, 100).name("x坐标")
+const positionControlY = gui.add(mesh.position, "y", 0, 100).name("y坐标")
+const positionControlZ = gui.add(mesh.position, "z", 0, 100).name("z坐标")
 
 
-const intensityControl = gui.add(pointLight, "intensity", 0.1, 2)
+const intensityControl = gui.add(pointLight, "intensity", 0.1, 2).name("亮度")
 
 intensityControl.onChange(function (value) {
     renderer.render(scene, camera);//执行渲染操作

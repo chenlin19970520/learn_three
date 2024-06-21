@@ -75,6 +75,9 @@ export const menuComponents = [
             {
                 name: "12、gui.js库（可视化改变三维场景）",
                 component: getComponent('basic13')
+            }, {
+                name: "13、gui.js调试界面2 - 颜色命名",
+                component: getComponent('basic14')
             }
         ]
     },
