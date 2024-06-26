@@ -2,6 +2,7 @@ import { VueElement } from "vue";
 
 
 const componentsBasic = import.meta.globEager("./components/basic/*.vue");
+const componentsGeometry = import.meta.globEager("./components/geometry/*.vue");
 const componentsOther = import.meta.globEager("./components/other/*.vue");
 
 const componentsObject: any = {};
@@ -15,7 +16,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther)
+setComponent(componentsBasic, componentsOther,componentsGeometry)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -73,11 +74,27 @@ export const menuComponents = [
                 component: getComponent('basic12')
             },
             {
-                name: "12、gui.js库（可视化改变三维场景）",
+                name: "13、gui.js库（可视化改变三维场景）",
                 component: getComponent('basic13')
             }, {
-                name: "13、gui.js调试界面2 - 颜色命名",
+                name: "14、gui.js调试界面2 - 颜色命名",
                 component: getComponent('basic14')
+            }, {
+                name: "15、gui.js调试界面3 - 下拉菜单、单选框",
+                component: getComponent("basic15")
+            },
+            {
+                name: "16、分组",
+                component: getComponent('basic16')
+            }
+        ]
+    },
+    {
+        name: "几何体BufferGeometry",
+        childrens: [
+            {
+                name: "1、几何体顶点位置数据和点模型",
+                component: getComponent('geometry1')
             }
         ]
     },

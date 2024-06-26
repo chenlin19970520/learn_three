@@ -26,6 +26,10 @@ scene.add(pointLightHelper)
 
 const gui = new GUI();//实例化一个gui对象
 
+
+
+//格式 add(控制对象,对象具体属性,其他参数)
+
 const obj = {
     x: 30,
     y: 30,
@@ -37,6 +41,47 @@ const positionControlZ = gui.add(mesh.position, "z", 0, 100).name("z坐标")
 const intensityControl = gui.add(pointLight, "intensity", 0.1, 2).name("亮度")
 
 const colorControl = gui.addColor({ color: "0x00ffff" }, 'color').name("颜色");
+
+
+const downMenuControl = gui.add({
+    scale: 0
+}, 'scale', [-100, 0, 100]).name("坐标").onChange((val) => {
+    mesh.position.y = val;
+    renderer.render(scene, camera)
+})
+
+
+const downMenuObjectControl = gui.add({
+    scale:0
+},'scale',{
+    left:-100,
+    center:0,
+    right:100
+}).name("位置选择").onChange((val)=>{
+    mesh.position.x = val;
+    renderer.render(scene, camera)
+})
+
+const radioObject = {
+    bool:false
+}
+
+const radioControl = gui.add(radioObject,'bool').name("是否旋转").onChange(function (value) {
+    // 点击单选框，控制台打印obj.bool变化
+    console.log('obj.bool',value);
+    if(value){
+        rotateRender();
+    }
+});
+
+
+function rotateRender() {
+    if(radioObject.bool){
+        mesh.rotateY(0.01);//Y轴旋转
+        renderer.render(scene, camera);
+        requestAnimationFrame(rotateRender);
+    }
+}
 
 intensityControl.onChange(function (value) {
     renderer.render(scene, camera);//执行渲染操作
