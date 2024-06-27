@@ -16,7 +16,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther,componentsGeometry)
+setComponent(componentsBasic, componentsOther, componentsGeometry)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -95,6 +95,29 @@ export const menuComponents = [
             {
                 name: "1、几何体顶点位置数据和点模型",
                 component: getComponent('geometry1')
+            },
+            {
+                name: "2、线模型对象",
+                component: getComponent("geometry2")
+            },
+            {
+                name: "3、网格模型（三角形概念）",
+                component: getComponent("geometry3")
+            }, {
+                name: "4、构建一个矩形平面几何体",
+                component: getComponent("geometry4")
+            }, {
+                name: "5、几何体顶点索引数据",
+                component: getComponent('geometry5')
+            }, {
+                name: "6、顶点法线数据",
+                component: getComponent('geometry6')
+            }, {
+                name: "7、查看three.js自带的几何体顶点",
+                component: getComponent('geometry7')
+            }, {
+                name: "8、旋转、缩放、平移几何体",
+                component: getComponent('geometry8')
             }
         ]
     },
