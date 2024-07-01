@@ -4,23 +4,22 @@
 <script setup lang="ts">
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import Stats from "three/examples/jsm/libs/stats.module";
-
+import Stats from "three/examples/jsm/libs/stats.module.js";
 const scene = new THREE.Scene();
 
 
 const boxGeometry = new THREE.BoxGeometry(100, 100, 100);//长方体 宽，高，深 = x,y,z 
-const SphereGeometry = new THREE.SphereGeometry(50);//球体 半径
-const cylinderGeometry = new THREE.CylinderGeometry(0,50,100);//圆柱体 ， 参数为:radiusTop,radiusBottom,height等，顶部半径，底部半径，高度
-const planeGeometry = new THREE.PlaneGeometry(100,100,10,10);//矩形平面 x,y
-const circleGeometry = new THREE.CircleGeometry(75);//圆平面 半径 ，平面不能反射光，透光。
+// const SphereGeometry = new THREE.SphereGeometry(50);//球体 半径
+// const cylinderGeometry = new THREE.CylinderGeometry(0,50,100);//圆柱体 ， 参数为:radiusTop,radiusBottom,height等，顶部半径，底部半径，高度
+// const planeGeometry = new THREE.PlaneGeometry(100,100,10,10);//矩形平面 x,y
+// const circleGeometry = new THREE.CircleGeometry(75);//圆平面 半径 ，平面不能反射光，透光。
 
-const material = new THREE.MeshLambertMaterial({
-    color: 0x00ffff,
-    transparent: true,
-    // opacity: 0.5,
-    side:THREE.DoubleSide,//设置双面可见，默认THREE.FrontSide单面可见
-}); // 创建一个漫反射材质
+// const material = new THREE.MeshLambertMaterial({
+//     color: 0x00ffff,
+//     transparent: true,
+//     // opacity: 0.5,
+//     side:THREE.DoubleSide,//设置双面可见，默认THREE.FrontSide单面可见
+// }); // 创建一个漫反射材质
 
 const phongMaterial = new THREE.MeshPhongMaterial({
     // color:0xff0000,
@@ -58,7 +57,7 @@ scene.add(pointLight);
 const pointLightHelper = new THREE.PointLightHelper(pointLight, 10);//创建一个点光源辅助器
 scene.add(pointLightHelper);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);//创建一个环境光，参数1环境光颜色，参数2光照强度.环境光AmbientLight (opens new window)没有特定方向，只是整体改变场景的光照明暗。
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);//创建一个环境光，参数1环境光颜色，参数2光照强度.环境光AmbientLight (opens new window)没有特定方向，只是整体改变场景的光照明暗。
 // scene.add(ambientLight);
 // const directionalLight = new THREE.DirectionalLight(0xffff00, 1.0);//创建一个平行光光源，参数1光源颜色，参数2光照强度
 // directionalLight.position.set(400, 200, 300);//设置光源的位置

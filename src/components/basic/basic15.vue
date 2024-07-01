@@ -30,11 +30,11 @@ const gui = new GUI();//实例化一个gui对象
 
 //格式 add(控制对象,对象具体属性,其他参数)
 
-const obj = {
-    x: 30,
-    y: 30,
-    z: 30,
-};//创建一个对象，对象的属性值可以被gui库创建的界面改变
+// const obj = {
+//     x: 30,
+//     y: 30,
+//     z: 30,
+// };//创建一个对象，对象的属性值可以被gui库创建的界面改变
 const positionControlX = gui.add(mesh.position, "x", 0, 100).name("x坐标").step(10)
 const positionControlY = gui.add(mesh.position, "y", 0, 100).name("y坐标")
 const positionControlZ = gui.add(mesh.position, "z", 0, 100).name("z坐标")
@@ -43,7 +43,7 @@ const intensityControl = gui.add(pointLight, "intensity", 0.1, 2).name("亮度")
 const colorControl = gui.addColor({ color: "0x00ffff" }, 'color').name("颜色");
 
 
-const downMenuControl = gui.add({
+ gui.add({
     scale: 0
 }, 'scale', [-100, 0, 100]).name("坐标").onChange((val) => {
     mesh.position.y = val;
@@ -51,7 +51,7 @@ const downMenuControl = gui.add({
 })
 
 
-const downMenuObjectControl = gui.add({
+ gui.add({
     scale:0
 },'scale',{
     left:-100,
@@ -66,7 +66,7 @@ const radioObject = {
     bool:false
 }
 
-const radioControl = gui.add(radioObject,'bool').name("是否旋转").onChange(function (value) {
+ gui.add(radioObject,'bool').name("是否旋转").onChange(function (value) {
     // 点击单选框，控制台打印obj.bool变化
     console.log('obj.bool',value);
     if(value){
@@ -83,16 +83,16 @@ function rotateRender() {
     }
 }
 
-intensityControl.onChange(function (value) {
+intensityControl.onChange(function () {
     renderer.render(scene, camera);//执行渲染操作
 })
-positionControlX.onChange(function (value) {
+positionControlX.onChange(function () {
     renderer.render(scene, camera);//执行渲染操作
 })
-positionControlY.onChange(function (value) {
+positionControlY.onChange(function () {
     renderer.render(scene, camera);//执行渲染操作
 })
-positionControlZ.onChange(function (value) {
+positionControlZ.onChange(function () {
     renderer.render(scene, camera);//执行渲染操作
 })
 

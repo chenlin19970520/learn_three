@@ -44,12 +44,12 @@ geometry.index = new THREE.BufferAttribute(indexes, 1);//索引数据赋值给�
 
 
 // 定义顶点法线数据。
-const normals = new Float32Array([
-    0, 0, 1, //顶点1法线( 法向量 )
-    0, 0, 1, //顶点2法线
-    0, 0, 1, //顶点3法线
-    0, 0, 1, //顶点4法线
-]);
+// const normals = new Float32Array([
+//     0, 0, 1, //顶点1法线( 法向量 )
+//     0, 0, 1, //顶点2法线
+//     0, 0, 1, //顶点3法线
+//     0, 0, 1, //顶点4法线
+// ]);
 // 设置几何体的顶点法线属性.attributes.normal
 // geometry.attributes.normal = new THREE.BufferAttribute(normals, 3); 
 

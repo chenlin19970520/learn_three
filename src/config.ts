@@ -3,6 +3,7 @@ import { VueElement } from "vue";
 
 const componentsBasic = import.meta.globEager("./components/basic/*.vue");
 const componentsGeometry = import.meta.globEager("./components/geometry/*.vue");
+const componentsGltf = import.meta.globEager("./components/gltf/*.vue");
 const componentsOther = import.meta.globEager("./components/other/*.vue");
 
 const componentsObject: any = {};
@@ -119,6 +120,50 @@ export const menuComponents = [
                 name: "8、旋转、缩放、平移几何体",
                 component: getComponent('geometry8')
             }
+        ]
+    },
+    {
+        name: "加载外部三维模型gltf",
+        childrens: [
+            {
+                name: "建模软件绘制3D场景(Blender)",
+                component: getComponent('gltf1')
+            },
+             {
+                name: "GLTF格式简介(web3D领域JPG)",
+                component: getComponent('gltf2')
+            },
+             {
+                name: "加载.gltf文件（模型加载全流程）",
+                component: getComponent('gltf3')
+            },
+             {
+                name: "OrbitControls辅助设置相机参数",
+                component: getComponent('gltf4')
+            },
+            {
+                name: "gltf不同文件形式（.glb)",
+                component: getComponent('gltf5')
+            }, 
+            {
+                name: "模型命名（程序与美术协作）",
+                component: getComponent('gltf6')
+            }, 
+            {
+                name: "递归遍历层级模型修改材质",
+                component: getComponent('gltf7')
+            },
+            {
+                name: "外部模型材质是否共享问题",
+                component: getComponent('gltf8')
+            }, {
+                name: "纹理encoding和渲染器",
+                component: getComponent('gltf9')
+            },
+            {
+                name: "gltf模型更换.map(纹理.flipY)",
+                component: getComponent('gltf10')
+            }, 
         ]
     },
     {

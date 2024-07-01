@@ -40,7 +40,7 @@ const material = new THREE.LineBasicMaterial({
 // const points = new THREE.Points(geometry,material) // 点模型对象
 
 const line = new THREE.Line(geometry,material); // 线模型对象
-const lineLoop = new THREE.LineLoop(geometry,material); //闭合线条 模型对象
+// const lineLoop = new THREE.LineLoop(geometry,material); //闭合线条 模型对象
 const lineSegments = new THREE.LineSegments(geometry,material);//非连续性线条
 lineSegments.position.set(0, 0, 0);//设置物体的位置
 scene.add(lineSegments);// 将物体添加到场景中

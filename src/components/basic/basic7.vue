@@ -65,10 +65,10 @@ controls.addEventListener("change", function () {
     renderer.render(scene, camera);//如果控件改变了相机参数，必须重新调用渲染操作
 })
 
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
 function animationRender() {
 
-    const spt = clock.getDelta() * 1000;//获取自上一帧渲染以来经过的时间
+    // const spt = clock.getDelta() * 1000;//获取自上一帧渲染以来经过的时间
     // console.log('两帧渲染时间间隔（毫秒）',spt);
     // console.log('帧率FPS',1000/spt)
 

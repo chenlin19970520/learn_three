@@ -48,6 +48,8 @@ onMounted(() => {
     <div class="three-body">
       <component :is="activeComponent" />
     </div>
+
+    <div class="bottom">渝ICP备2024034525号</div>
   </div>
 </template>
 
@@ -57,6 +59,14 @@ onMounted(() => {
   height: 100vh;
   display: flex;
   align-items: center;
+}
+
+.bottom {
+  position: fixed;
+  left:50%;
+  bottom:2px;
+  transform: translateX(-50%);
+  font-size: 12px;
 }
 
 .three-menu {
