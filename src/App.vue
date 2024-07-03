@@ -64,9 +64,10 @@ onMounted(() => {
 .bottom {
   position: fixed;
   left:50%;
-  bottom:2px;
+  bottom:6px;
   transform: translateX(-50%);
-  font-size: 12px;
+  font-size: 10px;
+  letter-spacing: 1px;
 }
 
 .three-menu {

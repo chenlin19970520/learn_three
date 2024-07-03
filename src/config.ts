@@ -3,6 +3,7 @@ import { VueElement } from "vue";
 
 const componentsBasic = import.meta.globEager("./components/basic/*.vue");
 const componentsGeometry = import.meta.globEager("./components/geometry/*.vue");
+const componentsModel = import.meta.globEager("./components/model/*.vue");
 const componentsGltf = import.meta.globEager("./components/gltf/*.vue");
 const componentsOther = import.meta.globEager("./components/other/*.vue");
 
@@ -17,7 +18,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther, componentsGeometry)
+setComponent(componentsBasic, componentsOther, componentsGeometry,componentsModel)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -120,6 +121,64 @@ export const menuComponents = [
                 name: "8、旋转、缩放、平移几何体",
                 component: getComponent('geometry8')
             }
+        ]
+    },
+    {
+        name:"模型对象、材质",
+        childrens:[
+            {
+                name:"1、三维向量Vector3与模型位置",
+                component:getComponent('model1')
+            },
+            {
+                name:"2、欧拉Euler与角度属性.rotation",
+                component:getComponent('model2')
+            },
+            {
+                name:"3、模型材质颜色（color对象）",
+                component:getComponent('model3')
+            },
+            {
+                name:"4、模型材质父类Material",
+                component:getComponent('model4')
+            },
+            {
+                name:"5、模型材质和几何属性",
+                component:getComponent('model5')
+            },
+            {
+                name:"6、克隆.clone()和复制.copy()",
+                component:getComponent('model6')
+            }
+        ]
+    },
+    {
+        name:"层级模型",
+        childrens:[
+            {
+                name:"Vector3与模型位置、缩放属性",
+                component:getComponent('zIndex1')
+            },
+            {
+                name:"Vector3与模型位置、缩放属性",
+                component:getComponent('zIndex2')
+            },
+            {
+                name:"Vector3与模型位置、缩放属性",
+                component:getComponent('zIndex3')
+            },
+            {
+                name:"Vector3与模型位置、缩放属性",
+                component:getComponent('zIndex4')
+            },
+            {
+                name:"Vector3与模型位置、缩放属性",
+                component:getComponent('zIndex5')
+            },
+            {
+                name:"Vector3与模型位置、缩放属性",
+                component:getComponent('zIndex6')
+            },
         ]
     },
     {
