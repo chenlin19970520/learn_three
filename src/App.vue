@@ -5,7 +5,7 @@ const activeComponent = ref<object>({});
 const activeComponentIndex = ref<number>(0);
 
 
-const firstAcitve = ref(0)
+const firstAcitve = ref(4)
 
 const changeComponent = (item: any, index: number) => {
   activeComponent.value = item.component;

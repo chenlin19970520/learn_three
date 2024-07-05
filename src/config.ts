@@ -6,7 +6,8 @@ const componentsGeometry = import.meta.globEager("./components/geometry/*.vue");
 const componentsModel = import.meta.globEager("./components/model/*.vue");
 const componentsGltf = import.meta.globEager("./components/gltf/*.vue");
 const componentsOther = import.meta.globEager("./components/other/*.vue");
-
+const componentZIndex = import.meta.globEager("./components/zIndex/*.vue");
+const componentTexture = import.meta.globEager("./components/texture/*.vue");
 const componentsObject: any = {};
 
 const setComponent = (...args: any[]) => {
@@ -18,7 +19,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther, componentsGeometry,componentsModel)
+setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -124,60 +125,89 @@ export const menuComponents = [
         ]
     },
     {
-        name:"模型对象、材质",
-        childrens:[
+        name: "模型对象、材质",
+        childrens: [
             {
-                name:"1、三维向量Vector3与模型位置",
-                component:getComponent('model1')
+                name: "1、三维向量Vector3与模型位置",
+                component: getComponent('model1')
             },
             {
-                name:"2、欧拉Euler与角度属性.rotation",
-                component:getComponent('model2')
+                name: "2、欧拉Euler与角度属性.rotation",
+                component: getComponent('model2')
             },
             {
-                name:"3、模型材质颜色（color对象）",
-                component:getComponent('model3')
+                name: "3、模型材质颜色（color对象）",
+                component: getComponent('model3')
             },
             {
-                name:"4、模型材质父类Material",
-                component:getComponent('model4')
+                name: "4、模型材质父类Material",
+                component: getComponent('model4')
             },
             {
-                name:"5、模型材质和几何属性",
-                component:getComponent('model5')
+                name: "5、模型材质和几何属性",
+                component: getComponent('model5')
             },
             {
-                name:"6、克隆.clone()和复制.copy()",
-                component:getComponent('model6')
+                name: "6、克隆.clone()和复制.copy()",
+                component: getComponent('model6')
             }
         ]
     },
     {
-        name:"层级模型",
-        childrens:[
+        name: "层级模型",
+        childrens: [
             {
-                name:"Vector3与模型位置、缩放属性",
-                component:getComponent('zIndex1')
+                name: "Vector3与模型位置、缩放属性",
+                component: getComponent('zIndex1')
             },
             {
-                name:"Vector3与模型位置、缩放属性",
-                component:getComponent('zIndex2')
+                name: "遍历模型树结构、查询模型节点",
+                component: getComponent('zIndex2')
             },
             {
-                name:"Vector3与模型位置、缩放属性",
-                component:getComponent('zIndex3')
+                name: "本地坐标和世界坐标",
+                component: getComponent('zIndex3')
             },
             {
-                name:"Vector3与模型位置、缩放属性",
-                component:getComponent('zIndex4')
+                name: "改变模型相对局部坐标原点位置",
+                component: getComponent('zIndex4')
             },
             {
-                name:"Vector3与模型位置、缩放属性",
-                component:getComponent('zIndex5')
+                name: "移除对象remove",
+                component: getComponent('zIndex5')
             },
             {
-                name:"Vector3与模型位置、缩放属性",
-                component:getComponent('zIndex6')
+                name: "模型隐藏或者显示",
+                component: getComponent('zIndex6')
+            },
+        ]
+    },
+    {
+        name: "顶点UV坐标，纹理贴图",
+        childrens: [
+            {
+                name: "创建纹理贴图",
+                component: getComponent('texture1')
+            },
+            {
+                name: "自定义顶点UV坐标",
+                component: getComponent('texture2')
+            },
+            {
+                name: "圆形平面设置纹理贴图",
+                component: getComponent('texture3')
+            },
+            {
+                name: "纹理对象Texture阵列",
+                component: getComponent('texture4')
+            },
+            {
+                name: "矩形Mesh+背景透明png贴图",
+                component: getComponent('texture5')
+            },
+            {
+                name: "UV动画",
+                component: getComponent('texture6')
             },
         ]
     },
@@ -188,26 +218,26 @@ export const menuComponents = [
                 name: "建模软件绘制3D场景(Blender)",
                 component: getComponent('gltf1')
             },
-             {
+            {
                 name: "GLTF格式简介(web3D领域JPG)",
                 component: getComponent('gltf2')
             },
-             {
+            {
                 name: "加载.gltf文件（模型加载全流程）",
                 component: getComponent('gltf3')
             },
-             {
+            {
                 name: "OrbitControls辅助设置相机参数",
                 component: getComponent('gltf4')
             },
             {
                 name: "gltf不同文件形式（.glb)",
                 component: getComponent('gltf5')
-            }, 
+            },
             {
                 name: "模型命名（程序与美术协作）",
                 component: getComponent('gltf6')
-            }, 
+            },
             {
                 name: "递归遍历层级模型修改材质",
                 component: getComponent('gltf7')
@@ -222,7 +252,7 @@ export const menuComponents = [
             {
                 name: "gltf模型更换.map(纹理.flipY)",
                 component: getComponent('gltf10')
-            }, 
+            },
         ]
     },
     {
@@ -230,7 +260,7 @@ export const menuComponents = [
         childrens: [
             {
                 name: "3D文字",
-                component: getComponent('basicText')
+                component: getComponent('other1')
             }
         ]
     }
