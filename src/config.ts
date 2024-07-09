@@ -8,6 +8,8 @@ const componentsGltf = import.meta.globEager("./components/gltf/*.vue");
 const componentsOther = import.meta.globEager("./components/other/*.vue");
 const componentZIndex = import.meta.globEager("./components/zIndex/*.vue");
 const componentTexture = import.meta.globEager("./components/texture/*.vue");
+const componentPbr = import.meta.globEager("./components/pbr/*.vue");
+
 const componentsObject: any = {};
 
 const setComponent = (...args: any[]) => {
@@ -19,7 +21,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture)
+setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture,componentPbr)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -256,11 +258,24 @@ export const menuComponents = [
         ]
     },
     {
+        name:"PBR材质与纹理贴图",
+        childrens:[
+            {
+                name:"环境贴图.envMap（金属效果）",
+                component:getComponent('pbr1')
+            }
+        ]
+    },
+    {
         name: "其他内容",
         childrens: [
             {
                 name: "3D文字",
                 component: getComponent('other1')
+            },
+            {
+                name: "渲染河流",
+                component: getComponent('other2')
             }
         ]
     }
