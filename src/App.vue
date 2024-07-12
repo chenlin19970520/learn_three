@@ -57,12 +57,14 @@ onMounted(() => {
   height: 100vh;
   display: flex;
   align-items: center;
+  padding-left: 20rem;
+  box-sizing: border-box;
 }
 
 .bottom {
   position: fixed;
-  left:50%;
-  bottom:6px;
+  left: 50%;
+  bottom: 6px;
   transform: translateX(-50%);
   font-size: 10px;
   letter-spacing: 1px;
@@ -76,6 +78,11 @@ onMounted(() => {
   padding: 1rem;
   box-sizing: border-box;
   white-space: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: white;
 }
 
 

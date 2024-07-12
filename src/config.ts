@@ -9,6 +9,11 @@ const componentsOther = import.meta.globEager("./components/other/*.vue");
 const componentZIndex = import.meta.globEager("./components/zIndex/*.vue");
 const componentTexture = import.meta.globEager("./components/texture/*.vue");
 const componentPbr = import.meta.globEager("./components/pbr/*.vue");
+const componentUi = import.meta.globEager("./components/Ui/*.vue");
+const componentMapbox = import.meta.globEager("./components/mapbox/*.vue");
+
+
+
 
 const componentsObject: any = {};
 
@@ -21,7 +26,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture,componentPbr)
+setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture, componentPbr, componentUi, componentMapbox)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -258,12 +263,54 @@ export const menuComponents = [
         ]
     },
     {
-        name:"PBR材质与纹理贴图",
-        childrens:[
+        name: "PBR材质与纹理贴图",
+        childrens: [
             {
-                name:"环境贴图.envMap（金属效果）",
-                component:getComponent('pbr1')
+                name: "环境贴图.envMap（金属效果）",
+                component: getComponent('pbr1')
             }
+        ]
+    },
+    {
+        name: "渲染器和前端UI界面",
+        childrens: [
+            {
+                name: "threejs Canvas画布布局",
+                component: getComponent('ui1')
+            },
+            {
+                name: "UI交互界面与Canvas画布叠加",
+                component: getComponent('ui2')
+            },
+            {
+                name: "UI交互按钮与3D场景交互",
+                component: getComponent('ui3')
+            },
+            {
+                name: "THREE背景透明度",
+                component: getComponent('ui4')
+            },
+            {
+                name: "THREE渲染结果保存为图片",
+                component: getComponent('ui5')
+            },
+            {
+                name: "模型冲突，模型闪烁",
+                component: getComponent('ui6')
+            },
+            {
+                name: "模型加载进度条",
+                component: getComponent('ui7')
+            },
+        ]
+    },
+    {
+        name: "MapBox",
+        childrens: [
+            {
+                name: "试用",
+                component: getComponent('mapbox1')
+            },
         ]
     },
     {
