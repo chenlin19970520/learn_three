@@ -6,6 +6,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import longhe from "/json/longhe.json"
+mapboxgl.accessToken = "pk.eyJ1IjoiY3FtaW1pIiwiYSI6ImNrdDhmeThkNTExdWIyb25yMXloNzI2Y2UifQ.UZyLRG2RNaLwyY946dDRRQ"
 
 // mapbox通用style模板
 const list = [
@@ -21,113 +22,310 @@ const list = [
     "mapbox://styles/mapbox/navigation-night-v1",
 ]
 const mapRef = ref()
-const getData = () => {
-    // fetch("/json/shizhu.geojson").then(res => {
-    //     return res.json()
-    // }).then(res => {
-    //     res.features.forEach((item, index) => {
 
-    //         item.properties.height = 50;
-    //         item.properties.base_height = 1;
-    //         item.properties.name = 'model' + index;
-    //         item.properties.color = "0xff0000"
-    //     })
-    //     console.log(res);
-    //     init(res)
-    // })
 
-    fetch("/json/longhe.json").then(res => {
-        return res.json()
-    }).then(res => {
-        mapRef.value.on('load', () => {
-            mapRef.value.setConfigProperty('basemap', 'lightPreset', 'dusk');
-            mapRef.value.addSource('longhe', {
-                type: "geojson",
-                data: res
-            })
-            mapRef.value.addLayer({
-                id: "longhe",
-                type: "line",
-                source: "longhe",
-                paint: {
-                    'line-color': 'red',
-                    'line-opacity': 0.8,
-                    'line-width': 10
-                }
-            })
-        })
+
+
+// 添加资源
+const addSource = (name: string, data: any, options: any = {}) => {
+
+    console.log(name, {
+        type: "geojson",
+        ...options,
+        data: data,
+    }, '----')
+    mapRef.value.addSource(name, {
+        type: "geojson",
+        ...options,
+        data: data,
     })
 }
 
-mapboxgl.accessToken = "pk.eyJ1IjoiY3FtaW1pIiwiYSI6ImNrdDhmeThkNTExdWIyb25yMXloNzI2Y2UifQ.UZyLRG2RNaLwyY946dDRRQ"
+// 添加3D建筑
+const addBuilding = (name: string, color: string) => {
+    mapRef.value.addLayer({
+        id: `3d-buildings-${name}`,
+        source: name,
+        type: 'fill-extrusion',
+        'minzoom': 15,
+        paint: {
+            "fill-extrusion-color": color,
+            "fill-extrusion-height": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                15,
+                0,
+                15.05,
+                ["get", "height"],
+            ],
+            'fill-extrusion-base': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                15,
+                0,
+                15.05,
+                ['get', 'min_height']
+            ],
+            "fill-extrusion-opacity": 0.75,
+        },
+    });
+}
 
-function init(result: any) {
-    // let defaultBuild = {
-    //     type: "FeatureCollection",
-    //     crs: {
-    //         type: "name",
-    //         properties: {
-    //             name: "EPSG:4326",
-    //         },
-    //     },
-    //     features: [],
-    // };
+// 添加线 
+const addLine = (name: string, color: string) => {
+    mapRef.value.addLayer({
+        id: "line-" + name,
+        type: "line",
+        source: name,
+        'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+        },
+        paint: {
+            'line-color': color,
+            'line-opacity': 0.5,
+            'line-width': 10
+        }
+    })
+
+    mapRef.value.addLayer({
+        id: "line-" + name + '-1',
+        type: "line",
+        source: name,
+
+        'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+        },
+        paint: {
+            'line-color': '#ffffff',
+            'line-width': 2
+        }
+    })
+}
+
+// 添加多边形
+const addPolygon = (name: string, color: string) => {
+    mapRef.value.addLayer({
+        id: "polygon-" + name,
+        type: "fill",
+        source: name,
+        paint: {
+            'fill-color': color,
+            'fill-opacity': 0.5
+        }
+    })
+}
+
+
+// 添加渐变线 
+const addGradientLine = (name: string) => {
+    mapRef.value.addLayer({
+        id: "line-" + name,
+        type: "line",
+        source: name,
+        paint: {
+            'line-color': 'rgba(0,0,0,0)',
+            'line-width': 14,
+            // 'line-gradient' must be specified using an expression
+            // with the special 'line-progress' property
+            'line-gradient': [
+                'interpolate',
+                ['linear'],
+                ['line-progress'],
+                0,
+                'rgba(0,0,0,0)',
+                0.5,
+                '#11D4EF',
+                1,
+                'rgba(0,0,0,0)',
+            ]
+        },
+        layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+        }
+    })
+
+
+}
 
 
 
+// 动态线数据
+const getAnimatinoLineData = (data: any, start: number, size: number) => {
+
+    return {
+        type: "FeatureCollection",
+        features: data.features.map((item: any) => {
+            const coordinates = item.geometry.coordinates[0];
+            let newCoordinates = [];
+            if (start + size > coordinates.length) {
+                const otherSize = size - (coordinates.length - start)
+                newCoordinates = [...coordinates.slice(start, coordinates.length), ...coordinates.slice(0, otherSize)];
+            } else {
+                newCoordinates = coordinates.slice(start, start + size);
+            }
+            return {
+                properties: {
+                    type: "Feature",
+                },
+                geometry: {
+                    type: "LineString",
+                    coordinates: newCoordinates
+                }
+            }
+        })
+    }
+}
+
+let lineFrame: any = null
+// 添加动态线
+const addAnimationLine = (data: any) => {
+    let start = 0;
+    let size = 20;
+    const lineData = getAnimatinoLineData(data, start, size);
+
+    addSource('animation-line', lineData, {
+        lineMetrics: true
+    })
+    addGradientLine('animation-line',)
+
+    const length = data.features[0].geometry.coordinates[0].length
+
+    const animationLoop = () => {
+        start += 1;
+        if (start >= length) {
+            start = 0;
+        }
+        const source = mapRef.value.getSource('animation-line')
+        const lineData = getAnimatinoLineData(data, start, size)
+        source.setData(lineData);
+        lineFrame = requestAnimationFrame(animationLoop)
+    }
+    animationLoop();
+}
+
+
+// 获取轮廓数据
+const getData = () => {
+    fetch("/json/lunkuo.json").then(res => {
+        return res.json()
+    }).then(res => {
+        res.features.forEach((item, index) => {
+            item.properties.height = index < 119 ? 40 : 20;
+            item.properties.base_height = 1;
+            item.properties.name = 'model' + index;
+        })
+        const yuanqu = {
+            ...res,
+            features: res.features.filter((_, index: number) => {
+                return index < 119;
+            })
+        }
+        const other = {
+            ...res,
+            features: res.features.filter((_, index: number) => {
+                return index >= 119;
+            })
+        }
+        addSource('yuanqu', yuanqu)
+        addSource('other', other)
+
+        addBuilding('yuanqu', '#4C8DAE')
+        addBuilding('other', '#aaaaaa')
+
+    })
+}
+
+// 获取高速数据
+const getRailwarys = () => {
+    fetch("/json/railways.json").then(res => {
+        return res.json()
+    }).then(res => {
+        addSource('railway', res)
+        addLine('railway', '#00ff00')
+    })
+}
+
+
+// 获取公路数据
+const getWays = () => {
+    fetch("/json/公路.json").then(res => {
+        return res.json()
+    }).then(res => {
+        addSource('way', res)
+        addLine('way', '#00ffff')
+    })
+}
+
+
+// 获取园区2的数据
+const getOtherArea = () => {
+    fetch("/json/lunkuo2.json").then(res => {
+        return res.json()
+    }).then(res => {
+        addSource('otherArea', res)
+        addPolygon('otherArea', '#4C8DAE')
+
+        addAnimationLine(res)
+    })
+}
+
+function init() {
+
+    mapRef.value = new mapboxgl.Map({
+        container: "map", // container ID
+        style: list[5],
+        center: [
+            108.05462930469744,
+            29.93831287442443
+        ], // starting position [lng, lat]
+        zoom: 16, // starting zoom
+        antialias: true,
+        pitch: 60,//俯视角度
+        bearing: -20,//旋转角度
+    })
     mapRef.value.on('load', () => {
+        getRailwarys();
+        getWays();
+        getData();
+        getOtherArea();
+        // mapRef.value.addLayer({
+        //     id: "line",
+        //     type: "line",
+        //     source: "shizhu",
+        //     paint: {
+        //         'line-color': 'red',
+        //         'line-opacity': 0.8,
+        //         'line-width': 10
+        //     }
+        // })
 
-        mapRef.value.addSource('shizhu', {
-            type: "geojson",
-            data: result
-        })
-        mapRef.value.addLayer({
-            id: "line",
-            type: "line",
-            source: "shizhu",
-            paint: {
-                'line-color': 'red',
-                'line-opacity': 0.8,
-                'line-width': 10
-            }
-        })
-
-        mapRef.value.addLayer({
-            id: "shizhu",
-            type: "fill",
-            source: "shizhu",
-            paint: {
-                'fill-color': '#0080ff',
-                'fill-opacity': 0.5
-            }
-        })
+        // mapRef.value.addLayer({
+        //     id: "shizhu",
+        //     type: "fill",
+        //     source: "shizhu",
+        //     paint: {
+        //         'fill-color': '#0080ff',
+        //         'fill-opacity': 0.5
+        //     }
+        // })
 
 
-        mapRef.value.addLayer({
-            id: '3d-buildings',
-            source: 'shizhu',
-            type: 'fill-extrusion',
-            paint: {
-                'fill-extrusion-color': '#aaa',
-                'fill-extrusion-height': ['get', 'height'],
-                'fill-extrusion-base': ['get', 'min_height'],
-                'fill-extrusion-opacity': 1
-            }
-        });
+
     })
 }
 onMounted(() => {
-    mapRef.value = new mapboxgl.Map({
-        container: "map", // container ID
-        // style: "mapbox://styles/cqmimi/cky9obe4o0u2114ju9ieckrj2", // style URL
-
-        // style: list[0],
-        center: [108.08249997, 29.95315189], // starting position [lng, lat]
-        zoom: 16, // starting zoom
-        antialias: true,
-    })
-    getData();
+    init();
 })
+
+onUnmounted(() => {
+    cancelAnimationFrame(lineFrame)
+})
+
 </script>
 
 <style scoped>

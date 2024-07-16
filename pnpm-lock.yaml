@@ -4,6 +4,7 @@ specifiers:
   '@types/node': ^20.14.2
   '@types/three': ^0.165.0
   '@vitejs/plugin-vue': ^4.2.3
+  coordtransform: ^2.1.2
   mapbox-gl: ^3.5.1
   three: ^0.165.0
   typescript: ^5.0.2
@@ -17,6 +18,7 @@ specifiers:
 dependencies:
   '@types/node': 20.14.2
   '@types/three': 0.165.0
+  coordtransform: 2.1.2
   mapbox-gl: 3.5.1
   three: 0.165.0
   unplugin-auto-import: 0.17.6
@@ -520,6 +522,10 @@ packages:
 
   /confbox/0.1.7:
     resolution: {integrity: sha512-uJcB/FKZtBMCJpK8MQji6bJHgu1tixKPxRLeGkNzBoOZzpnZUJm0jm2/sBDWcuBx1dYgxV4JU+g5hmNxCyAmdA==}
+    dev: false
+
+  /coordtransform/2.1.2:
+    resolution: {integrity: sha512-0xLJApBlrUP+clyLJWIaqg4GXE5JTbAJb5d/CDMqebIksAMMze8eAyO6YfHEIxWJ+c42mXoMHBzWTeUrG7RFhw==}
     dev: false
 
   /csscolorparser/1.0.3:

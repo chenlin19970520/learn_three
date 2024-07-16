@@ -311,6 +311,10 @@ export const menuComponents = [
                 name: "试用",
                 component: getComponent('mapbox1')
             },
+            {
+                name:"高德",
+                component:getComponent('gaode1')
+            }
         ]
     },
     {
