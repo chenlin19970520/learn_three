@@ -16,6 +16,9 @@ export default defineConfig({
     dts: 'auto-imports.d.ts'
   }),
   ],
+  server: {
+    host: '0.0.0.0',
+  },
   resolve: {
     alias: {
       "/@": join(__dirname, "/src"),
