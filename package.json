@@ -12,6 +12,8 @@
     "@types/node": "^20.14.2",
     "@types/three": "^0.165.0",
     "coordtransform": "^2.1.2",
+    "gsap": "^3.12.5",
+    "less": "^4.2.0",
     "mapbox-gl": "^3.5.1",
     "three": "^0.165.0",
     "unplugin-auto-import": "^0.17.6",

@@ -312,8 +312,11 @@ export const menuComponents = [
                 component: getComponent('mapbox1')
             },
             {
-                name:"高德",
-                component:getComponent('gaode1')
+                name: "高德",
+                component: getComponent('gaode1')
+            }, {
+                name: "楼栋",
+                component: getComponent('three-build')
             }
         ]
     },

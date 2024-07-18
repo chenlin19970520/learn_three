@@ -1,10 +1,24 @@
 <template>
     <div id="map"></div>
+
+    <div class="build" v-show="showBuild">
+        <three-build ref="threeBuild" />
+        <build-info ref="buildInfo" />
+        <div class="close-btn" @click="handleBuild"></div>
+    </div>
+
+
+    <land-info ref="landInfo" @close="hideLandModal" v-if="showLand" />
+
+
 </template>
 
 <script setup lang="ts">
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
+import ThreeBuild from "./three-build.vue"
+import BuildInfo from "./build-info.vue"
+import LandInfo from "./land-info.vue"
 import longhe from "/json/longhe.json"
 mapboxgl.accessToken = "pk.eyJ1IjoiY3FtaW1pIiwiYSI6ImNrdDhmeThkNTExdWIyb25yMXloNzI2Y2UifQ.UZyLRG2RNaLwyY946dDRRQ"
 
@@ -22,18 +36,21 @@ const list = [
     "mapbox://styles/mapbox/navigation-night-v1",
 ]
 const mapRef = ref()
+const showBuild = ref(false)
+const threeBuild = ref();
+const buildInfo = ref();
+const landInfo = ref();
+const showLand = ref(false)
 
+const handleBuild = () => {
+    buildInfo.value.handleClose();
+    showBuild.value = false;
+}
 
 
 
 // 添加资源
 const addSource = (name: string, data: any, options: any = {}) => {
-
-    console.log(name, {
-        type: "geojson",
-        ...options,
-        data: data,
-    }, '----')
     mapRef.value.addSource(name, {
         type: "geojson",
         ...options,
@@ -214,7 +231,7 @@ const getData = () => {
     fetch("/json/lunkuo.json").then(res => {
         return res.json()
     }).then(res => {
-        res.features.forEach((item, index) => {
+        res.features.forEach((item: any, index: number) => {
             item.properties.height = index < 119 ? 40 : 20;
             item.properties.base_height = 1;
             item.properties.name = 'model' + index;
@@ -235,7 +252,7 @@ const getData = () => {
         addSource('other', other)
 
         addBuilding('yuanqu', '#4C8DAE')
-        addBuilding('other', '#aaaaaa')
+        addBuilding('other', '#AAAAAA')
 
     })
 }
@@ -274,11 +291,59 @@ const getOtherArea = () => {
     })
 }
 
+function showBuildModal() {
+    showBuild.value = true
+}
+function hideBuildModal() {
+    showBuild.value = false
+}
+
+function showLandModal(){
+    showLand.value = true;
+}
+function hideLandModal(){
+    showLand.value = false
+}
+
+const showMap = () => {
+    document.getElementById("mapbox-gl").style.zIndex = 2;
+}
+
+const hideMap = () => {
+    hideBuildModal();
+    document.getElementById("mapbox-gl").style.zIndex = 1;
+}
+
+
+// 移动到园区1
+function flyToFirst() {
+    mapRef.value.flyTo({
+        center: [
+            108.05462930469744,
+            29.93831287442443
+        ],
+        zoom: 16,
+        essential: true,
+    })
+}
+// 移动到园区2
+function flyToSecond() {
+    mapRef.value.flyTo({
+        center: [
+            108.07919495494211,
+            29.957322232868666
+        ],
+        zoom: 16,
+        essential: true,
+    })
+}
+
 function init() {
 
     mapRef.value = new mapboxgl.Map({
         container: "map", // container ID
         style: list[5],
+        // style: 'mapbox://styles/mapbox/streets-v11',
         center: [
             108.05462930469744,
             29.93831287442443
@@ -293,28 +358,29 @@ function init() {
         getWays();
         getData();
         getOtherArea();
-        // mapRef.value.addLayer({
-        //     id: "line",
-        //     type: "line",
-        //     source: "shizhu",
-        //     paint: {
-        //         'line-color': 'red',
-        //         'line-opacity': 0.8,
-        //         'line-width': 10
-        //     }
-        // })
-
-        // mapRef.value.addLayer({
-        //     id: "shizhu",
-        //     type: "fill",
-        //     source: "shizhu",
-        //     paint: {
-        //         'fill-color': '#0080ff',
-        //         'fill-opacity': 0.5
-        //     }
-        // })
 
 
+        mapRef.value.on("click", (e) => {
+            const features = mapRef.value.queryRenderedFeatures(e.point, {
+                layers: ['3d-buildings-yuanqu', 'polygon-otherArea']
+            })
+            if (features.length > 0) {
+                const feature = features[0];//获取第一特征
+                console.log(feature)
+                const layer = feature.layer;
+
+                switch (layer.id) {
+                    case "3d-buildings-yuanqu":
+                        showBuildModal();
+
+                        break;
+                    case "polygon-otherArea":
+                        showLandModal()
+                        break;
+                }
+
+            }
+        })
 
     })
 }
@@ -332,5 +398,42 @@ onUnmounted(() => {
 #map {
     width: 100vw;
     height: 100vh;
+}
+
+.build {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+
+.close-btn::before,
+.close-btn::after {
+    content: '';
+    width: 2rem;
+    height: 2px;
+    background-color: white;
+    position: absolute;
+    top: .9rem;
+    right: 0;
+}
+
+.close-btn::before {
+    transform: rotate(45deg);
+}
+
+.close-btn::after {
+    transform: rotate(-45deg);
 }
 </style>
