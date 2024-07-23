@@ -314,7 +314,12 @@ export const menuComponents = [
             {
                 name: "高德",
                 component: getComponent('gaode1')
-            }, {
+            },
+            {
+                name: "高德3D",
+                component: getComponent('gaode2')
+            }, 
+            {
                 name: "楼栋",
                 component: getComponent('three-build')
             }

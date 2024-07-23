@@ -1,5 +1,10 @@
 <template>
-    <div id="first" style="height: 100%;width: 100%;"></div>
+    <div id="first"></div>
+    <div>
+        <button @click="changeColor('#ff0000')">变红</button>
+        <button @click="changeColor('#0000ff')">变蓝</button>
+        <button @click="changeColor('#00ff00')">变绿</button>
+    </div>
 </template>
 <script setup lang="ts">
 import * as THREE from "three";
@@ -26,9 +31,15 @@ const renderer = new THREE.WebGLRenderer();//创建一个渲染器
 renderer.setSize(width, height);//设置渲染器的宽高
 renderer.render(scene, camera);//执行渲染操作
 
+
+function changeColor(color: string) {
+    mesh.material.color.set(color);
+    renderer.render(scene, camera);
+}
+
 onMounted(() => {
     document.getElementById("first")?.appendChild(renderer.domElement);//将渲染后的画面插入到页面中
-console.log(document.getElementById("first"))
+    console.log(document.getElementById("first"))
 })
 </script>
 

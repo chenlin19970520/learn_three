@@ -64,26 +64,26 @@ const addBuilding = (name: string, color: string) => {
         id: `3d-buildings-${name}`,
         source: name,
         type: 'fill-extrusion',
-        'minzoom': 15,
+        minzoom: 4,
         paint: {
             "fill-extrusion-color": color,
             "fill-extrusion-height": [
                 "interpolate",
                 ["linear"],
                 ["zoom"],
-                15,
-                0,
-                15.05,
+                10,
+                1,
+                14.05,
                 ["get", "height"],
             ],
             'fill-extrusion-base': [
                 'interpolate',
                 ['linear'],
                 ['zoom'],
-                15,
-                0,
-                15.05,
-                ['get', 'min_height']
+                14,
+                10,
+                14.05,
+                ['get', 'base_height']
             ],
             "fill-extrusion-opacity": 0.75,
         },
@@ -298,10 +298,10 @@ function hideBuildModal() {
     showBuild.value = false
 }
 
-function showLandModal(){
+function showLandModal() {
     showLand.value = true;
 }
-function hideLandModal(){
+function hideLandModal() {
     showLand.value = false
 }
 

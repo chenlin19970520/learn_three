@@ -1,8 +1,10 @@
 <template>
+    <div style="z-index: 2;position:absolute;color: green;">红色</div>
     <div id="first" style="height: 100%;width: 100%;"></div>
 </template>
 <script setup lang="ts">
 import * as THREE from "three";
+import { render } from "vue";
 
 const scene = new THREE.Scene();// 创建一个3D场景
 const geometry = new THREE.BoxGeometry(100, 100, 100);// 创建一个长方体几何体
@@ -28,7 +30,14 @@ renderer.render(scene, camera);//执行渲染操作
 
 onMounted(() => {
     document.getElementById("first")?.appendChild(renderer.domElement);//将渲染后的画面插入到页面中
-console.log(document.getElementById("first"))
+
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0px';
+    renderer.domElement.style.zIndex = '-1';
+
+    // renderer.domElement.style.right = '0px';
+
+    console.log(document.getElementById("first"))
 })
 </script>
 
