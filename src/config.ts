@@ -11,6 +11,8 @@ const componentTexture = import.meta.globEager("./components/texture/*.vue");
 const componentPbr = import.meta.globEager("./components/pbr/*.vue");
 const componentUi = import.meta.globEager("./components/Ui/*.vue");
 const componentMapbox = import.meta.globEager("./components/mapbox/*.vue");
+const componentBaidu = import.meta.globEager("./components/baidu/*.vue");
+
 
 
 
@@ -26,7 +28,7 @@ const setComponent = (...args: any[]) => {
     })
 }
 
-setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture, componentPbr, componentUi, componentMapbox)
+setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture, componentPbr, componentUi, componentMapbox, componentBaidu)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -318,10 +320,36 @@ export const menuComponents = [
             {
                 name: "高德3D",
                 component: getComponent('gaode2')
-            }, 
+            },
             {
                 name: "楼栋",
                 component: getComponent('three-build')
+            }
+        ]
+    },
+    {
+        name: "百度地图",
+        childrens: [
+            {
+                name: "使用MapVGL",
+                component: getComponent('baidu1')
+            },
+            {
+                name: "标签图层",
+                component: getComponent('baidu2')
+            }, {
+                name: "轨迹飞线",
+                component: getComponent('baidu3')
+            }, {
+                name: "获取路线",
+                component: getComponent('baidu4')
+            }, {
+                name: "渲染建筑",
+                component: getComponent('baidu5')
+            },
+            {
+                name: "获取建筑",
+                component: getComponent('baidu6')
             }
         ]
     },
