@@ -12,7 +12,7 @@ const componentPbr = import.meta.globEager("./components/pbr/*.vue");
 const componentUi = import.meta.globEager("./components/Ui/*.vue");
 const componentMapbox = import.meta.globEager("./components/mapbox/*.vue");
 const componentBaidu = import.meta.globEager("./components/baidu/*.vue");
-
+const componentCurve = import.meta.globEager("./components/curve/*.vue");
 
 
 
@@ -27,8 +27,21 @@ const setComponent = (...args: any[]) => {
         })
     })
 }
-
-setComponent(componentsBasic, componentsOther, componentsGeometry, componentsModel, componentsGltf, componentZIndex, componentTexture, componentPbr, componentUi, componentMapbox, componentBaidu)
+const allCompany = [
+    componentsBasic,
+    componentsOther,
+    componentsGeometry,
+    componentsModel,
+    componentsGltf,
+    componentZIndex,
+    componentTexture,
+    componentPbr,
+    componentUi,
+    componentMapbox,
+    componentBaidu,
+    componentCurve
+]
+setComponent(...allCompany)
 const getComponent = (name: string): VueElement => {
     return componentsObject[name];
 }
@@ -307,6 +320,51 @@ export const menuComponents = [
         ]
     },
     {
+        name: "生成曲线、几何体",
+        childrens: [
+            {
+                name: "生成圆弧顶点",
+                component: getComponent('curve1')
+            },
+            {
+                name: "几何体方法.setFromPoints()",
+                component: getComponent('curve2')
+            },
+            {
+                name: "曲线curve简介",
+                component: getComponent('curve3')
+            },
+            {
+                name: "椭圆与圆",
+                component: getComponent("curve4")
+            },
+            {
+                name: "样条曲线",
+                component: getComponent('curve5')
+            },
+            {
+                name: "二次贝塞尔曲线",
+                component: getComponent('curve6')
+            },
+            {
+                name: "三次贝塞尔曲线",
+                component: getComponent('curve7')
+            },
+            {
+                name: "样条、贝塞尔曲线应用",
+                component: getComponent('curve8')
+            },
+            {
+                name: "组合曲线CurvePath拼接曲线",
+                component: getComponent('curve9')
+            },
+            {
+                name: "曲线路径管道TubeGeometry",
+                component: getComponent('curve10')
+            }
+        ]
+    },
+    {
         name: "MapBox",
         childrens: [
             {
@@ -353,6 +411,7 @@ export const menuComponents = [
             }
         ]
     },
+
     {
         name: "其他内容",
         childrens: [

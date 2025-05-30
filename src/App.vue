@@ -2,8 +2,8 @@
 import { menuComponents } from "./config";
 // import { ref } from "vue"
 const activeComponent = ref<object>({});
-const firstAcitve = ref(menuComponents.length - 2)
-const activeComponentIndex = ref<number>(menuComponents[menuComponents.length - 2].childrens.length - 1);
+const firstAcitve = ref(menuComponents.length - 4)
+const activeComponentIndex = ref<number>(menuComponents[menuComponents.length - 4].childrens.length - 1);
 
 const changeComponent = (item: any, index: number) => {
   activeComponent.value = item.component;

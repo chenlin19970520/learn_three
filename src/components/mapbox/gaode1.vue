@@ -53,7 +53,6 @@ onMounted(() => {
     })
 
     mapRef.value.on("rightclick", () => {
-        console.log("双击")
         if (currentBuild.value.length) {
             createPolygon(AMap);
         }

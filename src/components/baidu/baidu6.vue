@@ -25,6 +25,8 @@ const currentBuild: any = ref([]);// 当前建筑
 const markerList = ref([]);//当前marker列表
 const point = ref(); // 当前点位
 
+const isClickPolygon = ref(false);
+
 
 const opacityValue = ref(0.5)
 const fileUrl = ref()
@@ -48,41 +50,59 @@ function init() {
     })
 
     mapRef.value.addEventListener('rightclick', (e) => {
-        console.log(e, '右击')
-        if (currentBuild.value.length) {
+        console.log(e, "isClickPolygon")
+        if (currentBuild.value.length && currentBuild.value.length >= 3) {
             createPolygon();
+        } else {
+            setTimeout(() => {
+                if (!isClickPolygon.value) {
+                    alert("至少需要三个点")
+                } else {
+                    isClickPolygon.value = false;
+                }
+            }, 100)
         }
     })
+
+    const oldBuild = getStore('buildList');
+    if (oldBuild) {
+        buildList.value = oldBuild;
+        buildList.value.forEach((element, elementIndex) => {
+            if (element) {
+                currentBuild.value = element;
+                createPolygon(false, elementIndex)
+            }
+        });
+    }
 }
 
 
-function createPolygon( sAdd: boolean = true, index = buildList.value.length) {
+function createPolygon(isAdd: boolean = true, index = buildList.value.length) {
 
     const polygon = new BMapGL.Polygon(
         currentBuild.value.map((item: any) => {
             return new BMapGL.Point(item[0], item[1])
         }),
         {
-        strokeColor: "#FF33FF",
-        strokeOpacity: 0.2,
-        strokeWeight: 6,
-        fillColor: "#1791fc",
-        fillOpacity: 0.35,
+            strokeColor: "#FF33FF",
+            strokeOpacity: 0.2,
+            strokeWeight: 6,
+            fillColor: "#1791fc",
+            fillOpacity: 0.35,
+        })
+
+    polygon.addEventListener('rightclick', (e) => {
+        const name = e.target.name;
+        const index = name.split('-')[1];
+        mapRef.value.removeOverlay(polygon)
+        buildList.value[index] = null;
+        isClickPolygon.value = true;
+
     })
-
-    // polygon.on('rightclick', (e) => {
-    //     const name = e.target.name;
-    //     console.log(name)
-    //     const index = name.split('-')[1];
-    //     mapRef.value.remove(polygon)
-    //     buildList.value[index] = null;
-
-    //     console.log(polygonList.value, buildList.value)
-    // })
-    // polygon.name = 'polygon-' + index;
-    // if (isAdd) {
-    //     buildList.value.push(currentBuild.value);
-    // }
+    polygon.name = 'polygon-' + index;
+    if (isAdd) {
+        buildList.value.push(currentBuild.value);
+    }
     mapRef.value.addOverlay(polygon)
 
     // 清空上一个区域
@@ -111,6 +131,12 @@ function setOpacity() {
     }
 }
 
+function setStore(key, value) {
+    localStorage.setItem(key, JSON.stringify(value))
+}
+function getStore(key) {
+    return JSON.parse(localStorage.getItem(key))
+}
 function exportInfo() {
     const jianzu = {
         type: "FeatureCollection",
@@ -125,9 +151,7 @@ function exportInfo() {
                     type: "Polygon",
                     coordinates: [
                         [
-                            ...item.map(it => {
-                                return changeGeo(it)
-                            })
+                            ...item
                         ]
                     ]
                 }
@@ -135,6 +159,12 @@ function exportInfo() {
         })
     }
 }
+
+watch(() => buildList.value, (val) => {
+    setStore("buildList", val)
+}, {
+    deep: true,
+})
 
 
 onMounted(() => {
